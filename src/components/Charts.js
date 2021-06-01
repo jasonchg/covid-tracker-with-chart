@@ -31,7 +31,6 @@ const Charts = ({ lineData, line, country, barData }) => {
     />
   ) : null
 
-  console.log(barData)
   const barChart = barData ? (
     <Bar
       data={{

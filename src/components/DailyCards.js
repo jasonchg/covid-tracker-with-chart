@@ -20,12 +20,10 @@ const useStyles = makeStyles({
     textAlign: 'start',
     marginBottom: 7,
   },
-  cookies: {
-    background: '#eee',
-    padding: 7,
-    borderRadius: 10,
+  newUpdate: {
+    color: 'green',
+
     marginTop: 7,
-    width: '50%',
   },
 })
 
@@ -45,11 +43,22 @@ const Cards = ({ data, country }) => {
                   Total Confirmed
                 </Typography>
                 <Typography variant='h4' component='h2'>
-                  <CountUp start={0} end={data.TotalConfirmed} duration={2} />
+                  <CountUp
+                    start={0}
+                    end={Number(data.TotalConfirmed)}
+                    duration={2}
+                    separator=','
+                  />
                 </Typography>
                 {!country && (
-                  <Typography variant='subtitle1' className={classes.cookies}>
-                    + {data.NewConfirmed}
+                  <Typography variant='subtitle1' className={classes.newUpdate}>
+                    &#9650;
+                    <CountUp
+                      start={0}
+                      end={Number(data.NewConfirmed)}
+                      duration={2}
+                      separator=','
+                    />
                   </Typography>
                 )}
               </CardContent>
@@ -62,11 +71,22 @@ const Cards = ({ data, country }) => {
                   Total Deaths
                 </Typography>
                 <Typography variant='h4' component='h2'>
-                  <CountUp start={0} end={data.TotalDeaths} duration={2} />
+                  <CountUp
+                    start={0}
+                    end={data.TotalDeaths}
+                    duration={2}
+                    separator=','
+                  />
                 </Typography>
                 {!country && (
-                  <Typography variant='subtitle1' className={classes.cookies}>
-                    + {data.NewDeaths}
+                  <Typography variant='subtitle1' className={classes.newUpdate}>
+                    &#9650;
+                    <CountUp
+                      start={0}
+                      end={Number(data.NewDeaths)}
+                      duration={2}
+                      separator=','
+                    />
                   </Typography>
                 )}
               </CardContent>
@@ -79,11 +99,22 @@ const Cards = ({ data, country }) => {
                   Total Recovered
                 </Typography>
                 <Typography variant='h4' component='h2'>
-                  <CountUp start={0} end={data.TotalRecovered} duration={2} />
+                  <CountUp
+                    start={0}
+                    end={data.TotalRecovered}
+                    duration={2}
+                    separator=','
+                  />
                 </Typography>
                 {!country && (
-                  <Typography variant='subtitle1' className={classes.cookies}>
-                    + {data.NewRecovered}
+                  <Typography variant='subtitle1' className={classes.newUpdate}>
+                    &#9650;
+                    <CountUp
+                      start={0}
+                      end={Number(data.NewRecovered)}
+                      duration={2}
+                      separator=','
+                    />
                   </Typography>
                 )}
               </CardContent>

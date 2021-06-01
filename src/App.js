@@ -42,59 +42,64 @@ function App() {
   const [selectedCountrySummary, setSelectedCountrySummary] = useState(null)
   const [selectedCountryAllResult, setSelectedCountryAllResult] = useState(null)
 
-  const url = 'https://api.covid19api.com'
-
-  // Get Daily Summary
-  const getDailyCovidSummary = async () => {
-    try {
-      return await fetch(`${url}/summary`)
-        .then((res) => res.json())
-        .then((result) => setData(result))
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  // Get Countries
-  const getCountries = async () => {
-    try {
-      return await fetch(`${url}/countries`)
-        .then((res) => res.json())
-        .then((result) => setCountries(result))
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  // Get Selected Country Stats
-  const getSelectedCountry = async () => {
-    try {
-      return await fetch(`${url}/total/dayone/country/${selectedCountry}`)
-        .then((res) => res.json())
-        .then((result) => {
-          setSelectedCountryAllResult(result)
-          setSelectedCountrySummary({
-            TotalConfirmed: result.reduce(
-              (total, curr) => total + curr.Confirmed,
-              0
-            ),
-            TotalDeaths: result.reduce((total, curr) => total + curr.Deaths, 0),
-            TotalRecovered: result.reduce(
-              (total, curr) => total + curr.Recovered,
-              0
-            ),
-          })
-        })
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   useEffect(() => {
+    const url = 'https://api.covid19api.com'
+
+    // Get Daily Summary
+    const getDailyCovidSummary = async () => {
+      try {
+        return await fetch(`${url}/summary`)
+          .then((res) => res.json())
+          .then((result) => setData(result))
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    // Get Countries
+    const getCountries = async () => {
+      try {
+        return await fetch(`${url}/countries`)
+          .then((res) => res.json())
+          .then((result) => setCountries(result))
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    // Get Selected Country Stats
+    const getSelectedCountry = async () => {
+      try {
+        return await fetch(`${url}/total/dayone/country/${selectedCountry}`)
+          .then((res) => res.json())
+          .then((result) => {
+            setSelectedCountryAllResult(result)
+            setSelectedCountrySummary({
+              TotalConfirmed: result.reduce(
+                (total, curr) => total + curr.Confirmed,
+                0
+              ),
+              TotalDeaths: result.reduce(
+                (total, curr) => total + curr.Deaths,
+                0
+              ),
+              TotalRecovered: result.reduce(
+                (total, curr) => total + curr.Recovered,
+                0
+              ),
+            })
+          })
+      } catch (error) {
+        console.error(error)
+      }
+    }
     getDailyCovidSummary()
     getCountries()
-    getSelectedCountry()
-  }, [])
+
+    if (selectedCountry !== '') {
+      getSelectedCountry()
+    }
+  }, [selectedCountry])
 
   return !data || !countries ? (
     'Loading...'
