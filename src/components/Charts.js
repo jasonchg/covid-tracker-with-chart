@@ -1,6 +1,6 @@
-import { Line, Bar } from 'react-chartjs-2'
+import { Line, Bar, Doughnut } from 'react-chartjs-2'
 
-const Charts = ({ lineData, line, country, barData }) => {
+const Charts = ({ lineData, line, country, doughnutData }) => {
   const lineCharts = lineData ? (
     <Line
       data={{
@@ -31,8 +31,8 @@ const Charts = ({ lineData, line, country, barData }) => {
     />
   ) : null
 
-  const barChart = barData ? (
-    <Bar
+  const doughnut = doughnutData ? (
+    <Doughnut
       data={{
         labels: ['Infected', 'Recovered', 'Deaths', 'Active'],
         datasets: [
@@ -44,30 +44,27 @@ const Charts = ({ lineData, line, country, barData }) => {
               'rgba(255, 0, 0, 0.5)',
               'rgba(242, 234, 0, 0.5)',
             ],
-            hoverBackgroundColor: [
+            borderColor: [
               'rgba(0, 77, 153)',
               'rgba(30, 102, 49)',
               'rgba(255, 51, 51)',
               'rgba(204, 153, 0)',
             ],
+            borderWidth: 1,
             data: [
-              barData.TotalConfirmed,
-              barData.TotalRecovered,
-              barData.TotalDeaths,
-              barData.TotalConfirmed -
-                (barData.TotalRecovered + barData.TotalDeaths),
+              doughnutData.TotalConfirmed,
+              doughnutData.TotalRecovered,
+              doughnutData.TotalDeaths,
+              doughnutData.TotalConfirmed -
+                (doughnutData.TotalRecovered + doughnutData.TotalDeaths),
             ],
           },
         ],
       }}
-      options={{
-        legend: { display: false },
-        title: { display: true, text: `Current state in ${country}` },
-      }}
     />
   ) : null
 
-  return <div>{line ? lineCharts : barChart}</div>
+  return <div>{line ? lineCharts : doughnut}</div>
 }
 
 export default Charts

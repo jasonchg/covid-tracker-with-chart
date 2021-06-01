@@ -153,7 +153,7 @@ function App() {
             <div className={classes.charts}>
               <Charts
                 country={selectedCountry}
-                barData={selectedCountrySummary}
+                doughnutData={selectedCountrySummary}
               />
             </div>
           </Grid>
