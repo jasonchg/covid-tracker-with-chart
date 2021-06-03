@@ -1,6 +1,6 @@
-import { Line, Bar, Doughnut } from 'react-chartjs-2'
+import { Line, Pie } from 'react-chartjs-2'
 
-const Charts = ({ lineData, line, country, doughnutData }) => {
+const Charts = ({ lineData, line, pieData }) => {
   const lineCharts = lineData ? (
     <Line
       data={{
@@ -9,21 +9,21 @@ const Charts = ({ lineData, line, country, doughnutData }) => {
           {
             data: lineData.map(({ Confirmed }) => Confirmed),
             label: 'Infected',
-            borderColor: '#3333ff',
+            borderColor: '#6200ee',
             fill: true,
           },
           {
             data: lineData.map(({ Deaths }) => Deaths),
             label: 'Deaths',
-            borderColor: 'red',
-            backgroundColor: 'rgba(255,0,0,0.5)',
+            borderColor: '#cf6679',
+            backgroundColor: 'rgba(128,0,0,0.5)',
             fill: true,
           },
           {
             data: lineData.map(({ Recovered }) => Recovered),
             label: 'Recovered',
-            borderColor: 'green',
-            backgroundColor: 'rgba(0,255,0,0.3)',
+            borderColor: '#018786',
+            backgroundColor: 'rgba(50,205,50,0.7)',
             fill: true,
           },
         ],
@@ -31,32 +31,27 @@ const Charts = ({ lineData, line, country, doughnutData }) => {
     />
   ) : null
 
-  const doughnut = doughnutData ? (
-    <Doughnut
+  const doughnut = pieData ? (
+    <Pie
       data={{
         labels: ['Infected', 'Recovered', 'Deaths', 'Active'],
         datasets: [
           {
             label: 'People',
             backgroundColor: [
-              'rgba(0, 0, 255, 0.5)',
-              'rgba(0, 255, 0, 0.5)',
-              'rgba(255, 0, 0, 0.5)',
-              'rgba(242, 234, 0, 0.5)',
+              '	rgba(48,25,52,1)',
+              'rgba(50,205,50,0.7)',
+              'rgba(128,0,0,0.5)',
+              'rgba(70,130,255, 0.7)',
             ],
-            borderColor: [
-              'rgba(0, 77, 153)',
-              'rgba(30, 102, 49)',
-              'rgba(255, 51, 51)',
-              'rgba(204, 153, 0)',
-            ],
-            borderWidth: 1,
+            borderColor: ['#6200ee', '#018786', '#cf6679', '#3700b3'],
+            borderWidth: 0,
             data: [
-              doughnutData.TotalConfirmed,
-              doughnutData.TotalRecovered,
-              doughnutData.TotalDeaths,
-              doughnutData.TotalConfirmed -
-                (doughnutData.TotalRecovered + doughnutData.TotalDeaths),
+              pieData.TotalConfirmed,
+              pieData.TotalRecovered,
+              pieData.TotalDeaths,
+              pieData.TotalConfirmed -
+                (pieData.TotalRecovered + pieData.TotalDeaths),
             ],
           },
         ],

@@ -19,10 +19,11 @@ const useStyles = makeStyles({
     width: 275,
     textAlign: 'start',
     marginBottom: 7,
+    background: '#121212',
+    color: '#fff',
   },
   newUpdate: {
-    color: 'green',
-
+    color: '#018786',
     marginTop: 7,
   },
 })
@@ -34,14 +35,12 @@ const Cards = ({ data, country }) => {
     'Loading... '
   ) : (
     <Grid container className={classes.root}>
-      <Grid item xs={12}>
+      <Grid item>
         <Grid container>
           <Grid item>
             <Card variant='outlined' className={classes.card}>
               <CardContent>
-                <Typography color='textSecondary' gutterBottom>
-                  Total Confirmed
-                </Typography>
+                <Typography gutterBottom>Total Confirmed</Typography>
                 <Typography variant='h4' component='h2'>
                   <CountUp
                     start={0}
@@ -67,9 +66,7 @@ const Cards = ({ data, country }) => {
           <Grid item>
             <Card variant='outlined' className={classes.card}>
               <CardContent>
-                <Typography color='textSecondary' gutterBottom>
-                  Total Deaths
-                </Typography>
+                <Typography gutterBottom>Total Deaths</Typography>
                 <Typography variant='h4' component='h2'>
                   <CountUp
                     start={0}
@@ -95,9 +92,7 @@ const Cards = ({ data, country }) => {
           <Grid item>
             <Card variant='outlined' className={classes.card}>
               <CardContent>
-                <Typography color='textSecondary' gutterBottom>
-                  Total Recovered
-                </Typography>
+                <Typography gutterBottom>Total Recovered</Typography>
                 <Typography variant='h4' component='h2'>
                   <CountUp
                     start={0}

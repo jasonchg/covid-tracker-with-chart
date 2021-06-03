@@ -6,36 +6,56 @@ import {
   Typography,
   Grid,
   makeStyles,
-  Select,
   FormControl,
 } from '@material-ui/core'
 import DailyCards from './components/DailyCards'
 import Charts from './components/Charts'
 
 const useStyles = makeStyles({
-  root: {},
+  root: {
+    padding: 10,
+  },
+  appBar: {
+    background: '#3700b3',
+  },
   sideBarLeft: {
-    height: '100vh',
     paddingTop: 20,
   },
-  sideBarRight: {
-    height: '100vh',
+  selectCountry: {
+    width: '100%',
+    padding: 15,
+    margin: 10,
+    fontWeight: 'bold',
+    outline: 'none',
+    border: 'none',
+    borderBottom: '1px solid #eee',
   },
   title: {
     fontWeight: 'bold',
     marginBottom: 7,
+    color: '#fff',
+  },
+  subtitle: {
+    color: '#fff',
   },
   formControl: {
     marginTop: 20,
   },
-  charts: {
-    margin: 20,
+  chartContainer: {
+    marginTop: 50,
+    width: '100%',
+    padding: 10,
+    border: '1px solid #e0e0e0',
+    borderRadius: 10,
   },
+  lineChart: {
+    padding: 15,
+  },
+  pieChart: { padding: 15 },
 })
 
 function App() {
   const classes = useStyles()
-
   const [data, setData] = useState(null)
   const [countries, setCountries] = useState(null)
   const [selectedCountry, setSelectedCountry] = useState('singapore')
@@ -105,29 +125,29 @@ function App() {
     'Loading...'
   ) : (
     <>
-      <AppBar position='static' color='secondary'>
+      <AppBar position='static' className={classes.appBar}>
         <Toolbar>
           <Typography variant='h6'>JCP | Covid 19 Tracker</Typography>
         </Toolbar>
       </AppBar>
       <Container className={classes.root}>
         <Grid container>
-          <Grid item xs={3}>
+          <Grid item lg={3}>
             <div className={classes.sideBarLeft}>
               <Typography variant='h5' className={classes.title}>
                 Global Overview
               </Typography>
-
-              <Typography color='textSecondary'>
+              <Typography className={classes.subtitle}>
                 <span>Last Updated At: {data.Date.substring(0, 10)}</span>
               </Typography>
               <DailyCards data={data.Global} />
             </div>
           </Grid>
-          <Grid item xs={9} className={classes.sideBarRight}>
+          <Grid item lg={9} className={classes.sideBarRight}>
             <FormControl className={classes.formControl}>
               <Typography>Select by country</Typography>
-              <Select
+              <select
+                className={classes.selectCountry}
                 value={selectedCountry}
                 onChange={(e) => setSelectedCountry(e.target.value)}
               >
@@ -138,24 +158,26 @@ function App() {
                       </option>
                     ))
                   : ''}
-              </Select>
+              </select>
               <DailyCards data={selectedCountrySummary} country />
             </FormControl>
 
-            <div className={classes.charts}>
-              <Charts
-                line
-                country={selectedCountry}
-                lineData={selectedCountryAllResult}
-                barData={selectedCountrySummary}
-              />
-            </div>
-            <div className={classes.charts}>
-              <Charts
-                country={selectedCountry}
-                doughnutData={selectedCountrySummary}
-              />
-            </div>
+            <Grid container className={classes.chartContainer}>
+              <Grid item xs={12} md={8} className={classes.lineChart}>
+                <Charts
+                  line
+                  country={selectedCountry}
+                  lineData={selectedCountryAllResult}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={4} className={classes.pieChart}>
+                <Charts
+                  country={selectedCountry}
+                  pieData={selectedCountrySummary}
+                />
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Container>
