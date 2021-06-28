@@ -7,24 +7,31 @@ import {
   Grid,
   makeStyles,
   FormControl,
+  Select,
+  MenuItem,
 } from '@material-ui/core'
 import DailyCards from './components/DailyCards'
 import Charts from './components/Charts'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     padding: 10,
+
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      justifyContent: 'center',
+      flexDirection: 'column',
+    },
   },
   appBar: {
     background: '#3700b3',
   },
   sideBarLeft: {
-    paddingTop: 20,
+    marginTop: 20,
   },
   selectCountry: {
-    width: '100%',
-    padding: 15,
     margin: 10,
+    color: '#fff',
     fontWeight: 'bold',
     outline: 'none',
     border: 'none',
@@ -52,19 +59,19 @@ const useStyles = makeStyles({
     padding: 15,
   },
   pieChart: { padding: 15 },
-})
+}))
 
 function App() {
   const classes = useStyles()
+
   const [data, setData] = useState(null)
   const [countries, setCountries] = useState(null)
   const [selectedCountry, setSelectedCountry] = useState('singapore')
   const [selectedCountrySummary, setSelectedCountrySummary] = useState(null)
   const [selectedCountryAllResult, setSelectedCountryAllResult] = useState(null)
+  const url = 'https://api.covid19api.com'
 
   useEffect(() => {
-    const url = 'https://api.covid19api.com'
-
     // Get Daily Summary
     const getDailyCovidSummary = async () => {
       try {
@@ -113,6 +120,7 @@ function App() {
         console.error(error)
       }
     }
+
     getDailyCovidSummary()
     getCountries()
 
@@ -126,9 +134,11 @@ function App() {
   ) : (
     <>
       <AppBar position='static' className={classes.appBar}>
-        <Toolbar>
-          <Typography variant='h6'>JCP | Covid 19 Tracker</Typography>
-        </Toolbar>
+        <Container className={classes.root}>
+          <Toolbar>
+            <Typography variant='h6'>Covid 19 Tracker</Typography>
+          </Toolbar>
+        </Container>
       </AppBar>
       <Container className={classes.root}>
         <Grid container>
@@ -143,22 +153,21 @@ function App() {
               <DailyCards data={data.Global} />
             </div>
           </Grid>
-          <Grid item lg={9} className={classes.sideBarRight}>
+          <Grid item lg={9} xs={12} className={classes.sideBarRight}>
             <FormControl className={classes.formControl}>
-              <Typography>Select by country</Typography>
-              <select
+              <Select
                 className={classes.selectCountry}
                 value={selectedCountry}
                 onChange={(e) => setSelectedCountry(e.target.value)}
               >
                 {countries.length !== 0
                   ? countries.map((country) => (
-                      <option key={country.Slug} value={country.Slug}>
+                      <MenuItem key={country.Slug} value={country.Slug}>
                         {country.Country}
-                      </option>
+                      </MenuItem>
                     ))
                   : ''}
-              </select>
+              </Select>
               <DailyCards data={selectedCountrySummary} country />
             </FormControl>
 

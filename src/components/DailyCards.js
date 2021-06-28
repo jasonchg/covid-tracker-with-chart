@@ -8,7 +8,7 @@ import {
 
 import CountUp from 'react-countup'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     marginTop: 25,
@@ -21,12 +21,15 @@ const useStyles = makeStyles({
     marginBottom: 7,
     background: '#121212',
     color: '#fff',
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: 435,
+    },
   },
   newUpdate: {
     color: '#018786',
     marginTop: 7,
   },
-})
+}))
 
 const Cards = ({ data, country }) => {
   const classes = useStyles()
